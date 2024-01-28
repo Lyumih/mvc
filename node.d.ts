@@ -1519,4 +1519,10 @@ declare namespace $ {
     }
 }
 
+declare namespace $.$$ {
+    class $mvc_app extends $.$mvc_app {
+        body(): readonly any[];
+    }
+}
+
 export = $;

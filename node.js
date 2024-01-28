@@ -4895,5 +4895,20 @@ var $;
     $.$mvc_app = $mvc_app;
 })($ || ($ = {}));
 //mvc/app/-view.tree/app.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mvc_app extends $.$mvc_app {
+            body() {
+                return [!this.user() ? this.Auth() : this.Login()];
+            }
+        }
+        $$.$mvc_app = $mvc_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mvc/app/app.view.ts
 
 //# sourceMappingURL=node.js.map

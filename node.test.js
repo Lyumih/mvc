@@ -4889,6 +4889,21 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mvc_app extends $.$mvc_app {
+            body() {
+                return [!this.user() ? this.Auth() : this.Login()];
+            }
+        }
+        $$.$mvc_app = $mvc_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mvc/app/app.view.ts
+;
+"use strict";
+var $;
 (function ($_1) {
     function $mol_test(set) {
         for (let name in set) {
