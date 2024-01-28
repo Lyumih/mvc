@@ -2,4 +2,29 @@ $mvc_app $mol_page
 	title \MVC - Game
 	user? null
 	body /
-		<= User_name $mol_section title <= user_name \Имя пользователя
+		<= Login $mol_button_minor
+			title \Войти
+		<= Auth $mol_list rows /
+			<= User_name $mol_string value? <=> user_name? \Имя пользователя
+			<= User_logout $mol_button_minor
+				title \Выйти
+			<= Unit_length $mol_paragraph title \Кол-во юнитов: 1
+			<= Units $mol_row sub <= units_list /
+				<= Unit*0 $mol_row sub /
+					<= Unit_id* $mol_paragraph title <= unit_id* \id
+					<= Unit_name* $mol_paragraph title <= unit_name*? \unit name
+					<= Unit_name_change* $mol_string value? <=> unit_name*?
+					- <= Unit_name_change* $mol_string value? <=> unit_name_change*? \
+					<= Unit_remove* $mol_button_major
+						title \Удалить юнита
+					<= Unit_copy* $mol_button_major
+						title \Копироваь юнита
+					<= Skills* $mol_row sub <= skill_list* /
+						<= Skill*0_0 $mol_row sub /
+							<= Skill_name* $mol_string value? <=> skill_name*? \Имя скила
+							<= Skill_remove* $mol_button_major 
+								title \Удалить скилл
+							<= Skill_add* $mol_button_major
+								title \Добавить умение
+			<= Unit_add $mol_button_major
+				title \Добавить юнита
