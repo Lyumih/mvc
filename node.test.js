@@ -4899,11 +4899,51 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mvc_entity_app extends $mol_object {
+        data(next) {
+            return next ?? {
+                auth: [],
+                users: [],
+                units: [],
+            };
+        }
+        get_users() {
+            return this.data().users;
+        }
+        edit_user(id, next) {
+            return this.data({
+                ...this.data(),
+                users: [...this.data().users.filter((user) => user.id !== id), next]
+            });
+        }
+        get_units() {
+            return this.data().units;
+        }
+        auth_user_list() {
+            return this.data().users.filter((user) => user.id === this.data().auth[0]?.id);
+        }
+        auth_user() {
+            return this.auth_user_list()[0];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mvc_entity_app.prototype, "data", null);
+    $.$mvc_entity_app = $mvc_entity_app;
+})($ || ($ = {}));
+//mvc/entity/app/app.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $mvc_app extends $.$mvc_app {
             body() {
                 return [!this.user() ? this.Auth() : this.Login()];
+            }
+            app() {
+                return new $mvc_entity_app();
             }
         }
         $$.$mvc_app = $mvc_app;

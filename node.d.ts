@@ -1516,9 +1516,53 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    class $mvc_entity_app extends $mol_object {
+        data(next?: {
+            auth: {
+                id: string;
+            }[];
+            users: {
+                id: string;
+            }[];
+            units: {}[];
+        }): {
+            auth: {
+                id: string;
+            }[];
+            users: {
+                id: string;
+            }[];
+            units: {}[];
+        };
+        get_users(): {
+            id: string;
+        }[];
+        edit_user(id: string, next: {
+            id: string;
+        }): {
+            auth: {
+                id: string;
+            }[];
+            users: {
+                id: string;
+            }[];
+            units: {}[];
+        };
+        get_units(): {}[];
+        auth_user_list(): {
+            id: string;
+        }[];
+        auth_user(): {
+            id: string;
+        };
+    }
+}
+
 declare namespace $.$$ {
     class $mvc_app extends $.$mvc_app {
         body(): readonly any[];
+        app(): $mvc_entity_app;
     }
 }
 

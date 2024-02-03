@@ -132,7 +132,9 @@
     "$mol_list",
     "$mol_support_css",
     "$mol_support",
-    "$mol_mem_cached"
+    "$mol_mem_cached",
+    "$mvc_entity_app",
+    "$mvc_entity"
   ],
   "dependencies": {
     "jsdom": "*"
