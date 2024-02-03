@@ -5,5 +5,9 @@ namespace $.$$ {
 			return [ !this.user() ? this.Auth() : this.Login() ]
 		}
 
+		app() {
+			return new $mvc_entity_app()
+		}
+
 	}
 }
