@@ -3084,6 +3084,13 @@ var $;
 
 ;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		event_scroll(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		scroll_top(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -3098,17 +3105,10 @@ var $;
 		event(){
 			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
-		tabindex(){
-			return -1;
-		}
-		event_scroll(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
+	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
-	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 
 
 ;
@@ -3391,19 +3391,6 @@ var $;
 
 ;
 	($.$mol_page) = class $mol_page extends ($.$mol_view) {
-		dom_name(){
-			return "article";
-		}
-		field(){
-			return {...(super.field()), "tabIndex": (this.tabindex())};
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Body()), 
-				(this.Foot())
-			];
-		}
 		tabindex(){
 			return -1;
 		}
@@ -3464,6 +3451,19 @@ var $;
 			(obj.dom_name) = () => ("footer");
 			(obj.sub) = () => ((this.foot()));
 			return obj;
+		}
+		dom_name(){
+			return "article";
+		}
+		field(){
+			return {...(super.field()), "tabIndex": (this.tabindex())};
+		}
+		sub(){
+			return [
+				(this.Head()), 
+				(this.Body()), 
+				(this.Foot())
+			];
 		}
 	};
 	($mol_mem(($.$mol_page.prototype), "Title"));
@@ -3603,6 +3603,12 @@ var $;
 
 ;
 	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		theme(){
+			return "$mol_theme_accent";
+		}
+		value(){
+			return null;
+		}
 		attr(){
 			return {...(super.attr()), "mol_theme": (this.theme())};
 		}
@@ -3611,12 +3617,6 @@ var $;
 		}
 		sub(){
 			return [(this.value())];
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		value(){
-			return null;
 		}
 	};
 
@@ -3653,6 +3653,33 @@ var $;
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
 		enabled(){
 			return true;
 		}
@@ -3689,40 +3716,13 @@ var $;
 			(obj.value) = () => ((this.error()));
 			return obj;
 		}
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
 	};
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
 	($mol_mem(($.$mol_button.prototype), "event_activate"));
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
 
 
 ;
@@ -3947,6 +3947,10 @@ var $;
 
 ;
 	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_plugin) {
+		keydown(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		event(){
 			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
 		}
@@ -3961,10 +3965,6 @@ var $;
 		}
 		mod_shift(){
 			return false;
-		}
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
 		}
 	};
 	($mol_mem(($.$mol_hotkey.prototype), "keydown"));
@@ -4006,52 +4006,6 @@ var $;
 
 ;
 	($.$mol_string) = class $mol_string extends ($.$mol_view) {
-		dom_name(){
-			return "input";
-		}
-		enabled(){
-			return true;
-		}
-		minimal_height(){
-			return 40;
-		}
-		autocomplete(){
-			return false;
-		}
-		selection(next){
-			if(next !== undefined) return next;
-			return [0, 0];
-		}
-		auto(){
-			return [(this.selection_watcher()), (this.error_report())];
-		}
-		field(){
-			return {
-				...(super.field()), 
-				"disabled": (this.disabled()), 
-				"value": (this.value_changed()), 
-				"placeholder": (this.hint_visible()), 
-				"spellcheck": (this.spellcheck()), 
-				"autocomplete": (this.autocomplete_native()), 
-				"selectionEnd": (this.selection_end()), 
-				"selectionStart": (this.selection_start()), 
-				"inputMode": (this.keyboard()), 
-				"enterkeyhint": (this.enter())
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"maxlength": (this.length_max()), 
-				"type": (this.type())
-			};
-		}
-		event(){
-			return {...(super.event()), "input": (next) => (this.event_change(next))};
-		}
-		plugins(){
-			return [(this.Submit())];
-		}
 		selection_watcher(){
 			return null;
 		}
@@ -4116,13 +4070,59 @@ var $;
 			(obj.key) = () => ({"enter": (next) => (this.submit(next))});
 			return obj;
 		}
+		dom_name(){
+			return "input";
+		}
+		enabled(){
+			return true;
+		}
+		minimal_height(){
+			return 40;
+		}
+		autocomplete(){
+			return false;
+		}
+		selection(next){
+			if(next !== undefined) return next;
+			return [0, 0];
+		}
+		auto(){
+			return [(this.selection_watcher()), (this.error_report())];
+		}
+		field(){
+			return {
+				...(super.field()), 
+				"disabled": (this.disabled()), 
+				"value": (this.value_changed()), 
+				"placeholder": (this.hint_visible()), 
+				"spellcheck": (this.spellcheck()), 
+				"autocomplete": (this.autocomplete_native()), 
+				"selectionEnd": (this.selection_end()), 
+				"selectionStart": (this.selection_start()), 
+				"inputMode": (this.keyboard()), 
+				"enterkeyhint": (this.enter())
+			};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"maxlength": (this.length_max()), 
+				"type": (this.type())
+			};
+		}
+		event(){
+			return {...(super.event()), "input": (next) => (this.event_change(next))};
+		}
+		plugins(){
+			return [(this.Submit())];
+		}
 	};
-	($mol_mem(($.$mol_string.prototype), "selection"));
 	($mol_mem(($.$mol_string.prototype), "value"));
 	($mol_mem(($.$mol_string.prototype), "type"));
 	($mol_mem(($.$mol_string.prototype), "event_change"));
 	($mol_mem(($.$mol_string.prototype), "submit"));
 	($mol_mem(($.$mol_string.prototype), "Submit"));
+	($mol_mem(($.$mol_string.prototype), "selection"));
 
 
 ;
@@ -4349,6 +4349,15 @@ var $;
 
 ;
 	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		rows(){
+			return [];
+		}
+		gap_before(){
+			return 0;
+		}
+		gap_after(){
+			return 0;
+		}
 		render_visible_only(){
 			return true;
 		}
@@ -4374,15 +4383,6 @@ var $;
 		}
 		view_window(){
 			return [0, 0];
-		}
-		rows(){
-			return [];
-		}
-		gap_before(){
-			return 0;
-		}
-		gap_after(){
-			return 0;
 		}
 	};
 	($mol_mem(($.$mol_list.prototype), "Empty"));
@@ -4553,16 +4553,6 @@ var $;
 
 ;
 	($.$mvc_app) = class $mvc_app extends ($.$mol_page) {
-		title(){
-			return "MVC - Game";
-		}
-		user(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		body(){
-			return [(this.Login()), (this.Auth())];
-		}
 		Login(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.title) = () => ("Войти");
@@ -4691,8 +4681,17 @@ var $;
 			]);
 			return obj;
 		}
+		title(){
+			return "MVC - Game";
+		}
+		user(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		body(){
+			return [(this.Login()), (this.Auth())];
+		}
 	};
-	($mol_mem(($.$mvc_app.prototype), "user"));
 	($mol_mem(($.$mvc_app.prototype), "Login"));
 	($mol_mem(($.$mvc_app.prototype), "user_name"));
 	($mol_mem(($.$mvc_app.prototype), "User_name"));
@@ -4714,6 +4713,7 @@ var $;
 	($mol_mem(($.$mvc_app.prototype), "Units"));
 	($mol_mem(($.$mvc_app.prototype), "Unit_add"));
 	($mol_mem(($.$mvc_app.prototype), "Auth"));
+	($mol_mem(($.$mvc_app.prototype), "user"));
 
 
 ;
