@@ -25,6 +25,7 @@ namespace $ {
 		get_units() {
 			return this.data().units
 		}
+
 		auth_user_list() {
 			return this.data().users.filter( ( user: { id: string } ) => user.id === this.data().auth[ 0 ]?.id )
 
