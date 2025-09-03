@@ -292,74 +292,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const $mol_theme: Record<"image" | "line" | "text" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "focus" | "field" | "spirit", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    let $mol_gap: Record<"text" | "space" | "blur" | "block" | "round", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_func_name(this: $, func: Function): string;
-    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
-}
-
-declare namespace $ {
-    function $mol_dom_render_children(el: Element | DocumentFragment, childNodes: NodeList | Array<Node | string | null>): void;
-}
-
-declare namespace $ {
-    type $mol_type_partial_deep<Val> = Val extends object ? Val extends Function ? Val : {
-        [field in keyof Val]?: $mol_type_partial_deep<Val[field]> | undefined;
-    } : Val;
-}
-
-declare namespace $ {
-    let $mol_jsx_prefix: string;
-    let $mol_jsx_crumbs: string;
-    let $mol_jsx_booked: null | Set<string>;
-    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
-    const $mol_jsx_frag = "";
-    function $mol_jsx<Props extends $mol_jsx.JSX.IntrinsicAttributes, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element), props: Props, ...childNodes: Children): Element | DocumentFragment;
-    namespace $mol_jsx.JSX {
-        interface Element extends HTMLElement {
-            class?: string;
-        }
-        interface ElementClass {
-            attributes: {};
-            ownerDocument: Pick<Document, 'getElementById' | 'createElementNS' | 'createDocumentFragment'>;
-            childNodes: Array<Node | string>;
-            valueOf(): Element;
-        }
-        type OrString<Dict> = {
-            [key in keyof Dict]: Dict[key] | string;
-        };
-        type IntrinsicElements = {
-            [key in keyof ElementTagNameMap]?: $.$mol_type_partial_deep<OrString<Element & IntrinsicAttributes & ElementTagNameMap[key]>>;
-        };
-        interface IntrinsicAttributes {
-            id?: string;
-            xmlns?: string;
-        }
-        interface ElementAttributesProperty {
-            attributes: {};
-        }
-        interface ElementChildrenAttribute {
-        }
-    }
-}
-
-declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
     function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
@@ -384,6 +316,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
     function $mol_fail_hidden(error: any): never;
 }
 
@@ -391,6 +327,11 @@ declare namespace $ {
     type $mol_type_writable<T> = {
         -readonly [P in keyof T]: T[P];
     };
+}
+
+declare namespace $ {
+    function $mol_func_name(this: $, func: Function): string;
+    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
 declare namespace $ {
@@ -708,6 +649,169 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static href_absolute(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static dict_cut(except: string[]): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static prolog: string;
+        static separator: string;
+        static make_link(next: {
+            [key: string]: string | null;
+        }): string;
+        static commit(): void;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static encode(str: string): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_media extends $mol_object2 {
+        static match(query: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    function $mol_wire_solid(): void;
+}
+
+declare namespace $ {
+    let $mol_mem_persist: typeof $mol_wire_solid;
+}
+
+declare namespace $ {
+    function $mol_wire_probe<Value>(task: () => Value, def?: Value): Value | undefined;
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $ {
+    export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
+    type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
+    type ConstructorResultAwaited<Some> = Some extends new (...args: infer Args) => infer Res ? new (...args: Args) => Res : {};
+    type MethodsResultAwaited<Host extends Object> = {
+        [K in keyof Host]: FunctionResultAwaited<Host[K]>;
+    };
+    type ObjectOrFunctionResultAwaited<Some> = (Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}) & (Some extends Object ? MethodsResultAwaited<Some> & ConstructorResultAwaited<Some> : Some);
+    export {};
+}
+
+declare namespace $ {
+    class $mol_storage extends $mol_object2 {
+        static native(): StorageManager;
+        static persisted(next?: boolean, cache?: 'cache'): boolean;
+        static estimate(): StorageEstimate;
+        static dir(): FileSystemDirectoryHandle;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static changes(next?: StorageEvent): StorageEvent | undefined;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_lights(this: $, next?: boolean): boolean;
+}
+
+declare namespace $ {
+    const $mol_theme: Record<"image" | "line" | "text" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "field" | "spirit", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    let $mol_gap: Record<"text" | "space" | "blur" | "block" | "round", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_dom_render_children(el: Element | DocumentFragment, childNodes: NodeList | Array<Node | string | null>): void;
+}
+
+declare namespace $ {
+    type $mol_type_partial_deep<Val> = Val extends object ? Val extends Function ? Val : {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]> | undefined;
+    } : Val;
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_crumbs: string;
+    let $mol_jsx_booked: null | Set<string>;
+    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
+    const $mol_jsx_frag = "";
+    function $mol_jsx<Props extends $mol_jsx.JSX.IntrinsicAttributes, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element), props: Props, ...childNodes: Children): Element | DocumentFragment;
+    namespace $mol_jsx.JSX {
+        interface Element extends HTMLElement {
+            class?: string;
+        }
+        interface ElementClass {
+            attributes: {};
+            ownerDocument: Pick<Document, 'getElementById' | 'createElementNS' | 'createDocumentFragment'>;
+            childNodes: Array<Node | string>;
+            valueOf(): Element;
+        }
+        type OrString<Dict> = {
+            [key in keyof Dict]: Dict[key] | string;
+        };
+        type IntrinsicElements = {
+            [key in keyof ElementTagNameMap]?: $.$mol_type_partial_deep<OrString<Element & IntrinsicAttributes & ElementTagNameMap[key]>>;
+        };
+        interface IntrinsicAttributes {
+            id?: string;
+            xmlns?: string;
+        }
+        interface ElementAttributesProperty {
+            attributes: {};
+        }
+        interface ElementChildrenAttribute {
+        }
+    }
+}
+
+declare namespace $ {
     class $mol_window extends $mol_object {
         static size(): {
             width: number;
@@ -861,10 +965,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_wire_probe<Value>(task: () => Value, def?: Value): Value | undefined;
-}
-
-declare namespace $ {
     function $mol_wire_watch(): void;
 }
 
@@ -873,10 +973,6 @@ declare namespace $ {
         (): Value;
         '()': Value;
     };
-}
-
-declare namespace $ {
-    function $mol_wire_solid(): void;
 }
 
 declare namespace $ {
@@ -1076,6 +1172,16 @@ declare namespace $ {
     function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
 }
 
+declare namespace $.$$ {
+    class $mol_scroll extends $.$mol_scroll {
+        scroll_top(next?: number, cache?: 'cache'): number;
+        scroll_left(next?: number, cache?: 'cache'): number;
+        event_scroll(next?: Event): void;
+        minimal_height(): number;
+        minimal_width(): number;
+    }
+}
+
 declare namespace $ {
 
 	export class $mol_scroll extends $mol_view {
@@ -1094,16 +1200,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=scroll.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_scroll extends $.$mol_scroll {
-        scroll_top(next?: number, cache?: 'cache'): number;
-        scroll_left(next?: number, cache?: 'cache'): number;
-        event_scroll(next?: Event): void;
-        minimal_height(): number;
-        minimal_width(): number;
-    }
-}
-
 declare namespace $.$$ {
 }
 
@@ -1205,7 +1301,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<"float" | "hover" | "focus" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"float" | "focus" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -1232,6 +1328,22 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=speck.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button extends $.$mol_button {
+        status(next?: any[]): any[];
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): void;
+        tab_index(): number;
+        error(): string;
+        hint_safe(): string;
+        sub_visible(): ($mol_view_content | $mol_speck)[];
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
@@ -1269,22 +1381,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=button.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button extends $.$mol_button {
-        status(next?: any[]): any[];
-        disabled(): boolean;
-        event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): void;
-        tab_index(): number;
-        error(): string;
-        hint_safe(): string;
-        sub_visible(): ($mol_view_content | $mol_speck)[];
-    }
-}
-
-declare namespace $ {
-}
-
 declare namespace $ {
 }
 
@@ -1309,6 +1405,13 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=minor.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_hotkey extends $.$mol_hotkey {
+        key(): { [key in keyof typeof $mol_keyboard_code]?: (event: KeyboardEvent) => void; };
+        keydown(event?: KeyboardEvent): void;
+    }
+}
+
 declare namespace $ {
 
 	export class $mol_hotkey extends $mol_plugin {
@@ -1326,14 +1429,20 @@ declare namespace $ {
 
 //# sourceMappingURL=hotkey.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $mol_hotkey extends $.$mol_hotkey {
-        key(): { [key in keyof typeof $mol_keyboard_code]?: (event: KeyboardEvent) => void; };
-        keydown(event?: KeyboardEvent): void;
+    class $mol_string extends $.$mol_string {
+        event_change(next?: Event): void;
+        error_report(): void;
+        hint_visible(): string;
+        disabled(): boolean;
+        autocomplete_native(): "on" | "off";
+        selection_watcher(): $mol_dom_listener;
+        selection_change(event: Event): void;
+        selection_start(): number;
+        selection_end(): number;
     }
 }
 
 declare namespace $ {
-    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
@@ -1401,16 +1510,12 @@ declare namespace $ {
 
 //# sourceMappingURL=string.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $mol_string extends $.$mol_string {
-        event_change(next?: Event): void;
-        error_report(): void;
-        hint_visible(): string;
-        disabled(): boolean;
-        autocomplete_native(): "on" | "off";
-        selection_watcher(): $mol_dom_listener;
-        selection_change(event: Event): void;
-        selection_start(): number;
-        selection_end(): number;
+    class $mol_paragraph extends $.$mol_paragraph {
+        maximal_width(): number;
+        width_limit(): number;
+        minimal_width(): number;
+        row_width(): number;
+        minimal_height(): number;
     }
 }
 
@@ -1430,19 +1535,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=paragraph.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_paragraph extends $.$mol_paragraph {
-        maximal_width(): number;
-        width_limit(): number;
-        minimal_width(): number;
-        row_width(): number;
-        minimal_height(): number;
-    }
-}
-
-declare namespace $ {
-}
-
 declare namespace $ {
 }
 
@@ -1470,8 +1562,23 @@ declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
+declare namespace $.$$ {
+    class $mol_list extends $.$mol_list {
+        sub(): readonly $mol_view[];
+        render_visible_only(): boolean;
+        view_window(next?: [number, number]): [number, number];
+        item_height_min(index: number): number;
+        row_width_min(index: number): number;
+        gap_before(): number;
+        gap_after(): number;
+        sub_visible(): $mol_view[];
+        minimal_height(): number;
+        minimal_width(): number;
+        force_render(path: Set<$mol_view>): void;
+    }
+}
+
 declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
 }
 
 declare namespace $ {
@@ -1508,25 +1615,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=list.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_list extends $.$mol_list {
-        sub(): readonly $mol_view[];
-        render_visible_only(): boolean;
-        view_window(next?: [number, number]): [number, number];
-        item_height_min(index: number): number;
-        row_width_min(index: number): number;
-        gap_before(): number;
-        gap_after(): number;
-        sub_visible(): $mol_view[];
-        minimal_height(): number;
-        minimal_width(): number;
-        force_render(path: Set<$mol_view>): void;
-    }
-}
-
-declare namespace $ {
-}
-
 declare namespace $ {
     class $mvc_entity_app extends $mol_object {
         data(next?: {
