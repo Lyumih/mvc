@@ -167,7 +167,6 @@
     "$mvc_entity"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }
