@@ -1,0 +1,10 @@
+{
+	"name": "mvc_app",
+	"short_name": "mvc_app",
+	"description": "",
+	"id": "mvc_app",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
