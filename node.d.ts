@@ -2156,6 +2156,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $ {
 
 	type $mol_hotkey__mod_ctrl_mol_string_1 = $mol_type_enforce<
 		ReturnType< $mol_string['submit_with_ctrl'] >
@@ -2226,6 +2230,7 @@ declare namespace $.$$ {
      */
     class $mol_string extends $.$mol_string {
         event_change(next?: Event): void;
+        value_changed(next?: string): string;
         error_report(): void;
         hint_visible(): string;
         disabled(): boolean;
@@ -2289,10 +2294,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=row.view.tree.d.ts.map
-declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
-}
-
 declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
