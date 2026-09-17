@@ -142,6 +142,7 @@
     "$mol_button_typed",
     "$mol_string",
     "$mol_hotkey",
+    "$mol_hotkey2",
     "$mol_action",
     "$mol_mem_cached",
     "$mol_paragraph",
